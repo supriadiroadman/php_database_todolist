@@ -15,10 +15,20 @@ class TodolistRepositoryImpl implements TodolistRepository
 {
     public array $todoList = array();
 
+    private \PDO $connection;
+
+    public function __construct(\PDO $connection)
+    {
+        $this->connection = $connection;
+    }
+
     function save(TodoList $todoList): void
     {
-        $number = count($this->todoList) + 1;
-        $this->todoList[$number] = $todoList;
+//        $number = count($this->todoList) + 1;
+//        $this->todoList[$number] = $todoList;
+        $sql = "INSERT INTO todolist (todo) VALUES (?)";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([$todoList->getTodo()]);
     }
 
 
