@@ -34,19 +34,6 @@ class TodolistRepositoryImpl implements TodolistRepository
 
     function remove(int $number): bool
     {
-        /*if ($number > count($this->todoList)) {
-            return false;
-        }
-
-        for ($i = $number; $i < count($this->todoList); $i++) {
-            $this->todoList[$i] = $this->todoList[$i + 1];
-        }
-
-        unset($this->todoList[count($this->todoList)]);
-        return true;*/
-
-        // Cek apakah ada id yg akan di hapus
-        // Karena fungsi ini mengembalikan bool, jadi harus true / false
         $sql = "SELECT id FROM todolist WHERE id = ?";
         $statement = $this->connection->prepare($sql);
         $statement->execute([$number]);
@@ -61,12 +48,25 @@ class TodolistRepositoryImpl implements TodolistRepository
             // todolist tidak ada
             return false;
         }
-
-
     }
 
     function findAll(): array
     {
-        return $this->todoList;
+        // return $this->todoList;
+
+        $sql = "SELECT id,todo FROM todolist";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute();
+
+        $result = [];
+        foreach ($statement as $row) {
+            $todolist = new TodoList();
+            $todolist->setId($row['id']);
+            $todolist->setTodo($row['todo']);
+
+            $result[] = $todolist;
+        }
+        return $result;
     }
+
 }

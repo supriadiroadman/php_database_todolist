@@ -10,7 +10,9 @@ use Repository\TodolistRepository;
 interface TodoListService
 {
     function showTodoList(): void;
+
     function addTodoList(string $todo): void;
+
     function removeTodolist(int $number): void;
 }
 
@@ -31,7 +33,7 @@ class TodoListServiceImpl implements TodoListService
         $todoList = $this->todolistRepository->findAll();
 
         foreach ($todoList as $number => $value) {
-            echo "$number." . $value->getTodo() . PHP_EOL;
+            echo $value->getId() .". ". $value->getTodo() . PHP_EOL;
         }
     }
 
@@ -41,6 +43,7 @@ class TodoListServiceImpl implements TodoListService
         $this->todolistRepository->save($todoList);
         echo "Sukses menambah TodoList" . PHP_EOL;
     }
+
     function removeTodolist(int $number): void
     {
         if ($this->todolistRepository->remove($number)) {
