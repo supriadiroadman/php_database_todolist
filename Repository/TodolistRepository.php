@@ -15,8 +15,6 @@ interface TodolistRepository
 
 class TodolistRepositoryImpl implements TodolistRepository
 {
-    public array $todoList = array();
-
     private \PDO $connection;
 
     public function __construct(\PDO $connection)
@@ -52,8 +50,6 @@ class TodolistRepositoryImpl implements TodolistRepository
 
     function findAll(): array
     {
-        // return $this->todoList;
-
         $sql = "SELECT id,todo FROM todolist";
         $statement = $this->connection->prepare($sql);
         $statement->execute();

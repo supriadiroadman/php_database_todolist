@@ -5,7 +5,6 @@ require_once __DIR__ . "/../Service/TodolistService.php";
 require_once __DIR__ . "/../Config/Database.php";
 
 use Config\Database;
-use Entity\TodoList;
 use Repository\TodolistRepositoryImpl;
 use Service\TodoListServiceImpl;
 
@@ -18,7 +17,7 @@ function testShowTodoList(): void
     $todoListService->showTodoList();
 }
 
-function addShowTodoList(): void
+function testAddTodoList(): void
 {
     $connection = Database::getConnection();
     $todoListRepository = new TodolistRepositoryImpl($connection);
@@ -30,7 +29,7 @@ function addShowTodoList(): void
 }
 
 
-function removeShowTodoList(): void
+function testRemoveTodoList(): void
 {
     $connection = Database::getConnection();
     $todoListRepository = new TodolistRepositoryImpl($connection);
@@ -43,4 +42,6 @@ function removeShowTodoList(): void
     $todoListService->removeTodolist(1);
 }
 
-testShowTodoList();
+//testShowTodoList();
+//testAddTodoList();
+testRemoveTodoList();

@@ -2,7 +2,7 @@
 
 namespace Service;
 
-require_once __DIR__ . "/../Repository/Todolistrepository.php";
+require_once __DIR__ . "/../Repository/TodolistRepository.php";
 
 use Entity\TodoList;
 use Repository\TodolistRepository;
@@ -32,7 +32,7 @@ class TodoListServiceImpl implements TodoListService
 
         $todoList = $this->todolistRepository->findAll();
 
-        foreach ($todoList as $number => $value) {
+        foreach ($todoList as $value) {
             echo $value->getId() .". ". $value->getTodo() . PHP_EOL;
         }
     }
