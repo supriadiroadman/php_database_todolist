@@ -7,7 +7,9 @@ use Entity\TodoList;
 interface TodolistRepository
 {
     function save(TodoList $todoList): void;
+
     function remove(int $number): bool;
+
     function findAll(): array;
 }
 
@@ -24,8 +26,6 @@ class TodolistRepositoryImpl implements TodolistRepository
 
     function save(TodoList $todoList): void
     {
-//        $number = count($this->todoList) + 1;
-//        $this->todoList[$number] = $todoList;
         $sql = "INSERT INTO todolist (todo) VALUES (?)";
         $statement = $this->connection->prepare($sql);
         $statement->execute([$todoList->getTodo()]);
@@ -34,7 +34,7 @@ class TodolistRepositoryImpl implements TodolistRepository
 
     function remove(int $number): bool
     {
-        if ($number > count($this->todoList)) {
+        /*if ($number > count($this->todoList)) {
             return false;
         }
 
@@ -43,8 +43,28 @@ class TodolistRepositoryImpl implements TodolistRepository
         }
 
         unset($this->todoList[count($this->todoList)]);
-        return true;
+        return true;*/
+
+        // Cek apakah ada id yg akan di hapus
+        // Karena fungsi ini mengembalikan bool, jadi harus true / false
+        $sql = "SELECT id FROM todolist WHERE id = ?";
+        $statement = $this->connection->prepare($sql);
+        $statement->execute([$number]);
+
+        if ($statement->fetch()) {
+            // todolist ada
+            $sql = "DELETE FROM todolist WHERE id = ?";
+            $statement = $this->connection->prepare($sql);
+            $statement->execute([$number]);
+            return true;
+        } else {
+            // todolist tidak ada
+            return false;
+        }
+
+
     }
+
     function findAll(): array
     {
         return $this->todoList;

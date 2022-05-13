@@ -38,27 +38,15 @@ function addShowTodoList(): void
 
 function removeShowTodoList(): void
 {
-    $todoListRepository = new TodolistRepositoryImpl();
-
+    $connection = Database::getConnection();
+    $todoListRepository = new TodolistRepositoryImpl($connection);
     $todoListService = new TodoListServiceImpl($todoListRepository);
 
-    $todoListService->addTodoList("PHP");
-    $todoListService->addTodoList("OOP PHP");
-    $todoListService->addTodoList("Laravel");
-
-    $todoListService->showTodoList();
-
-    $todoListService->removeTodolist(1);
-    $todoListService->showTodoList();
-
+    $todoListService->removeTodolist(5);
     $todoListService->removeTodolist(4);
-    $todoListService->showTodoList();
-
+    $todoListService->removeTodolist(3);
     $todoListService->removeTodolist(2);
-    $todoListService->showTodoList();
-
     $todoListService->removeTodolist(1);
-    $todoListService->showTodoList();
 }
 
-addShowTodoList();
+removeShowTodoList();
